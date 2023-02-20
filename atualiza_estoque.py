@@ -55,7 +55,7 @@ def carrega_arquivo(emp_focco,emp_microvix):
         #print('login')
 
         senha = navegador.find_element(By.ID,'f_senha')
-        senha.send_keys('Modelo#1875')
+        senha.send_keys('Modelo$1875')
         time.sleep(3)
         #print('senha')
 
