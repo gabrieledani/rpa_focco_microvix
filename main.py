@@ -1,5 +1,11 @@
 import atualiza_estoque
 import datetime
+import configparser
+
+#empresas = {'12':'2','13':'3','21':'5','41':'6','61':'7','71':'4','91':'8'}
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 while True:
     empresas = {'12':'2','13':'3','21':'5','41':'6','61':'7','71':'4','91':'8'}

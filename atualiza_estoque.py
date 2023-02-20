@@ -11,8 +11,13 @@ import time
 import os
 from datetime import datetime
 import logging
+import configparser
 
 #empresas = {'12':'2','13':'3','21':'5','41':'6','61':'7','71':'4','91':'8'}
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 
 def open_web():
     opcoes = webdriver.ChromeOptions()
@@ -45,17 +50,21 @@ def carrega_arquivo(emp_focco,emp_microvix):
         navegador = open_web()
         #navegador.maximize_window()
         
-        navegador.get("https://erp.microvix.com.br/")
+        url_microvix = config['MICROVIX']['url']
+        navegador.get(url_microvix)
         time.sleep(10)
         #print('site')
 
+        user_microvix = config['MICROVIX']['username']
+
         usuario = navegador.find_element(By.ID,'f_login')
-        usuario.send_keys('modelovencedor.casavalduga')
+        usuario.send_keys(user_microvix)
         time.sleep(3)
         #print('login')
 
+        pass_microvix = config['MICROVIX']['password']
         senha = navegador.find_element(By.ID,'f_senha')
-        senha.send_keys('Modelo$1875')
+        senha.send_keys(pass_microvix)
         time.sleep(3)
         #print('senha')
 
@@ -81,8 +90,9 @@ def carrega_arquivo(emp_focco,emp_microvix):
         time.sleep(10)
 
         #pagina de entrada de arquivo de estoque
+        versao_microvix = config['MICROVIX']['versao']
         url = navegador.current_url
-        url = url[:url.find('v4')]
+        url = url[:url.find(versao_microvix)]
 
         navegador.get(url+"gestor_web/produtos/balanco/envia_balanco.asp")
         #print('pagina balanco')
@@ -139,3 +149,4 @@ def carrega_arquivo(emp_focco,emp_microvix):
     except:
         logging.info(datetime.now().strftime("%H:%M:%S - ") + "Erro"+emp_focco+emp_microvix)
         print('Error',emp_focco,emp_microvix)
+
