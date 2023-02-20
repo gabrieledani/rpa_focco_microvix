@@ -2,29 +2,32 @@ import logging
 import cx_Oracle
 from datetime import datetime
 import os
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 diretorio = os.getcwd()
 
 def database_connect():
+
+    ora_client = config['ORACLE']['client']
     """starts oracle client and returns connection object"""
     try:
-        oracle_lib = file = os.path.join(diretorio,"instantclient_21_3")
+        oracle_lib = file = os.path.join(diretorio, ora_client)
         cx_Oracle.init_oracle_client(lib_dir=oracle_lib)
     except:
         pass
     
     #[ORACLE]
-    ip = 'oracle'
-    #port = '1521'
-    sid = 'f3ipro'
-    user = 'FOCCO3i'
-    password = 'serv17'
+    ip = config['ORACLE']['ip']
+    #port = config['ORACLE']['port']
+    sid = config['ORACLE']['sid']
+    user = config['ORACLE']['user']
+    password = config['ORACLE']['password']
     
-    connection = cx_Oracle.connect(
-        user,
-        password,
-        f'{ip}/{sid}')
-
+    connection = cx_Oracle.connect(user,password,f'{ip}/{sid}')
     return connection
 
 def find_param(cursor, par_emp):
