@@ -10,8 +10,8 @@ base = None
 if sys.platform == "win32":
     base = "Win32GUI"
 
-setup(  name = "integration_oracle_crmsimples",
-        version = "0.1",
+setup(  name = "integration_oracle_microvix",
+        version = "1.0",
         description = "Stock Integration - FoccoERP and Microvix",
         options = {"build_exe": build_exe_options},
         executables = [Executable("main.py", base=base)])
